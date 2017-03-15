@@ -7,17 +7,21 @@ import {
     View
  } from 'react-native';
 
-import {incrementCounter, decrementCounter} from '../actions';
+import {deleteTodo} from '../actions';
 
 var TodoItem = React.createClass ({
-    
+    deleteTodo(){
+        this.props.dispatch(deleteTodo(this.props.id));
+    },
     render() {
         return (
-            <View style={styles.todoContainer}> 
-                <Text style={styles.todoText}>
-                    {this.props.text}
-                </Text>
-            </View>
+            <TouchableOpacity onPress={this.deleteTodo}>
+                <View style={styles.todoContainer}> 
+                    <Text style={styles.todoText}>
+                        {this.props.text}
+                    </Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 });
@@ -36,4 +40,4 @@ const styles = StyleSheet.create({
 });
 
 
-module.exports = TodoItem;
+module.exports = connect()(TodoItem);

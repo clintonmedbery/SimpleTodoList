@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { 
     StyleSheet,
     Text,
@@ -9,21 +10,30 @@ import {
  } from 'react-native';
 
 import TodoItem from './TodoItem';
+import {addTodo} from '../actions';
 
 var Main = React.createClass ({
+    getInitialState() {
+        return{
+            newTodoText: ""
+
+        }
+    },
+    addNewTodo(){
+        var {newTodoText} = this.state;
+        if (newTodoText && newTodoText != ""){
+            this.setState({
+                newTodoText: ""
+            });
+            this.props.dispatch(addTodo(newTodoText));
+            console.log(newTodoText);
+        }
+    },
     render() {
-        var temporaryTodos = [
-            {
-                id: "123",
-                text: "Todo 1"
-            },
-            {
-                id: "1232",
-                text: "Todo 2"
-            }
-        ]
+
         var renderTodos = () => {
-            return temporaryTodos.map((todo) => {
+            return this.props.todos.map((todo) => {
+                
                 return (
                     <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
                 )
@@ -39,7 +49,17 @@ var Main = React.createClass ({
                         </Text>
                     </View>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.input}/>
+                        <TextInput 
+                        onChange={(event) => {
+                            this.setState({
+                                newTodoText: event.nativeEvent.text
+                            });
+                        }}
+                        value={this.state.newTodoText}
+                        returnKeyType="done"
+                        placeholder="New To-Do"
+                        style={styles.input}
+                        onSubmitEditing={this.addNewTodo}/>
                     </View>
                 <ScrollView automaticallyAdjustContnetInsets={false}>
                     {renderTodos()}
@@ -82,4 +102,11 @@ const styles = StyleSheet.create({
 
   }
 });
-module.exports = Main;
+
+var mapStateToProps = (state) => {
+    return {
+        todos: state.todos
+    }
+};
+
+module.exports = connect(mapStateToProps)(Main);
