@@ -1,4 +1,10 @@
+const passport = require('passport');
+
+const passportService = require('./passport');
 const AuthenticationController = require('../controllers/authenticationController');
+
+var requireAuth = passport.authenticate('jwt', {session: false});
+var requireLogin = passport.authenticate('local', {session: false});
 
 var router = require('express').Router();
 
@@ -7,8 +13,10 @@ function protected(req, res, next) {
 }
 
 router.route('/protected')
-    .get(protected);
+    .get(requireAuth, protected);
 
 router.route('/signup').post(AuthenticationController.signup);
+router.route('/signin').post(requireLogin, AuthenticationController.signin);
+
 
 module.exports = router;
