@@ -4,7 +4,7 @@ import {persistStore, autoRehydrate} from 'redux-persist';
 import reducer from '../reducer';
 
 var defaultState = {
-    todos: []
+    // todos: []
 }
 
 export var configureStore = (initialState=defaultState) => {

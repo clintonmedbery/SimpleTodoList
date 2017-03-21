@@ -7,13 +7,13 @@ import {
 } from 'react-native';
 
 import {configureStore} from './app/store';
-import Main from './app/components/Main';
+import App from './app/components/App';
 
 export default class todoList extends Component {
   render() {
     return (
       <Provider store={configureStore()}>
-        <Main/>
+        <App/>
       </Provider>
     );
   }
