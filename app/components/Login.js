@@ -8,17 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-const submit = values => {
-    var errors = {};
-    if(!values.email){
-        errors.email = "Please enter an email.";
-    }
-    if(!values.password){
-        errors.password = "Please enter a password.";
-    }
-    console.log('submitting form', values);
-    return errors;
-}
+import {loginUser, signUpUser, addAlert} from '../actions';
 
 var EmailField = React.createClass ( {
     render(){
@@ -68,7 +58,32 @@ class Login extends Component {
         }
 
         if(!this.state.emailError && !this.state.passwordError){
-            console.log("Send email and Password")
+            console.log("Send email and Password");
+            this.props.dispatch(loginUser(props.email, props.password));
+            this.setState(this.state);
+
+        } else {
+            this.setState(this.state);
+        }
+
+    }
+    onSignUp = (props) => {
+        var errors = {};
+        this.state.emailError = null;
+        this.state.passwordError = null;
+
+        if(!props.email){
+            this.state.emailError = "Please enter an email.";
+        }
+        if(!props.password){
+            this.state.passwordError = "Please enter a password.";
+        }
+
+        if(!this.state.emailError && !this.state.passwordError){
+            console.log("Send email and Password");
+            this.props.dispatch(signUpUser(props.email, props.password));
+            this.setState(this.state);
+
         } else {
             this.setState(this.state);
         }
@@ -104,10 +119,10 @@ class Login extends Component {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={handleSubmit(props => this.onSignIn(props))}>
                         <Text style={styles.button}>
-                            Sign Up
+                            Sign In
                         </Text>
                      </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleSubmit(props => this.onSignUp(props))}>
                         <Text style={styles.button}>
                             Sign Up
                         </Text>

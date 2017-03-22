@@ -12,7 +12,7 @@ import {
 import TodoItem from './TodoItem';
 import {addTodo} from '../actions';
 
-var Main = React.createClass ({
+var TodoController = React.createClass ({
     getInitialState() {
         return{
             newTodoText: ""
@@ -32,12 +32,12 @@ var Main = React.createClass ({
     render() {
 
         var renderTodos = () => {
-            return this.props.todos.map((todo) => {
+            // return this.props.todos.map((todo) => {
                 
-                return (
-                    <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
-                )
-            });
+            //     return (
+            //         <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
+            //     )
+            // });
         }
         return (
             <View style={styles.container}>
@@ -109,4 +109,4 @@ var mapStateToProps = (state) => {
     }
 };
 
-module.exports = connect(mapStateToProps)(Main);
+module.exports = connect(mapStateToProps)(TodoController);

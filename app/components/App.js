@@ -9,15 +9,36 @@ import {
     ScrollView
  } from 'react-native';
 
-// import TodoItem from './TodoItem';
 import Login from './Login';
-// import {addTodo} from '../actions';
+import TodoController from './TodoController';
+import AlertContainer from './alerts/AlertContainer';
+
+var renderMainView = () => {
+    return this.props.alerts.map((alert) => {
+        return (
+            <Alert alert={alert} key={alert.id}/>
+        )
+     });
+};
 
 var App = React.createClass ({
     render() {
+        var renderMainView = () => {
+            if(this.props.user_id){
+                return (
+                <Login/>
+                );
+            } else {
+                return (<TodoController/>);
+            }
+        };
+        
         return (
-               <Login/>
-        );
+            <View style={{flex: 1}}>
+                {renderMainView()}
+                <AlertContainer/>
+            </View>
+        )
     }
 });
 
@@ -55,9 +76,10 @@ const styles = StyleSheet.create({
   }
 });
 
-// var mapStateToProps = (state) => {
-//     return {
-//     }
-// };
+var mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user_id
+    }
+};
 
-module.exports = App;
+module.exports = connect(mapStateToProps)(App);

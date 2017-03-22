@@ -1,3 +1,6 @@
+export * from './authActions';
+export * from './alertActions';
+
 
 exports.addTodo = (text) => {
     return {
