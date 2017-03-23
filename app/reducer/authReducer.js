@@ -3,6 +3,7 @@ var defaultState = {
 }
 
 module.exports = (state=defaultState, action) => {
+    console.log(action);
     switch(action.type) {
         case 'AUTH_USER':
             return {

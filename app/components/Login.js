@@ -46,28 +46,20 @@ class Login extends Component {
         
     }
     onSignIn = (props) => {
-        var errors = {};
-        this.state.emailError = null;
-        this.state.passwordError = null;
-
-        if(!props.email){
-            this.state.emailError = "Please enter an email.";
-        }
-        if(!props.password){
-            this.state.passwordError = "Please enter a password.";
-        }
-
-        if(!this.state.emailError && !this.state.passwordError){
-            console.log("Send email and Password");
-            this.props.dispatch(loginUser(props.email, props.password));
-            this.setState(this.state);
-
-        } else {
-            this.setState(this.state);
-        }
+        if(this.validate(props)){
+           this.props.dispatch(loginUser(props.email, props.password));
+        } 
+         this.setState(this.state);
 
     }
     onSignUp = (props) => {
+        if(this.validate(props)){
+           this.props.dispatch(signUpUser(props.email, props.password));
+        } 
+        this.setState(this.state);
+
+    }
+    validate = (props) => {
         var errors = {};
         this.state.emailError = null;
         this.state.passwordError = null;
@@ -81,13 +73,10 @@ class Login extends Component {
 
         if(!this.state.emailError && !this.state.passwordError){
             console.log("Send email and Password");
-            this.props.dispatch(signUpUser(props.email, props.password));
-            this.setState(this.state);
-
+            return true;
         } else {
-            this.setState(this.state);
+            return false;
         }
-
     }
     render() {
         const {handleSubmit} = this.props;

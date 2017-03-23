@@ -11,7 +11,7 @@ var localOptions = {
 };
 
 var localStrategy = new LocalStrategy(localOptions, function(email, password, done){
-    User.findOne({email: email}, function(error, user){
+    User.findOne({email: email.toLowerCase()}, function(error, user){
         if(error){
             return done(error);
         }

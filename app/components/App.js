@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { 
     StyleSheet,
@@ -13,18 +13,12 @@ import Login from './Login';
 import TodoController from './TodoController';
 import AlertContainer from './alerts/AlertContainer';
 
-var renderMainView = () => {
-    return this.props.alerts.map((alert) => {
-        return (
-            <Alert alert={alert} key={alert.id}/>
-        )
-     });
-};
-
-var App = React.createClass ({
+class App extends Component{
+    
     render() {
         var renderMainView = () => {
-            if(this.props.user_id){
+            console.log(this.props);
+            if(!this.props.user_id){
                 return (
                 <Login/>
                 );
@@ -40,7 +34,7 @@ var App = React.createClass ({
             </View>
         )
     }
-});
+};
 
 const styles = StyleSheet.create({
   container: {
