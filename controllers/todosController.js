@@ -17,3 +17,21 @@ exports.create = function(req, res, next){
 exports.index = function(req, res, next){
     res.json({todos: req.user.todos});
 }
+
+exports.destroy = function(req, res, next) {
+    var user = req.user;
+    var todo_id = req.params.todo_id;
+    user.todos = user.todos.filter((todo) => {
+        if(todo.id == todo_id){
+            return false;
+        }
+        return true;
+    });
+    user.save(function(error){
+        if(error){
+            return next(error);
+        }
+        console.log(todo_id);
+        res.json();
+    });
+}

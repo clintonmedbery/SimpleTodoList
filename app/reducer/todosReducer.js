@@ -1,31 +1,26 @@
-var defaultState = [{
-    _id: "3324234234",
-    text: "Mow Lawn"
-},
-{
-    _id: "33123324234234",
-    text: "Rake Lawn"
-}];
 
-module.exports = (state=defaultState, action) => {
-    switch(action.type) {
+module.exports = (state=[], action) => {
+    switch (action.type) {
         case 'ADD_TODO':
             return [
                 ...state,
                 action.newTodo
             ];
 
+        case 'GET_TODOS':
+            return action.todos;
+
         case 'DELETE_TODO':
             return state.filter((todo) => {
                 //TODO Refactor with lodash perhaps
-                if(todo._id === action.id){
+                if (todo._id === action.todo_id) {
                     return false;
                 } else {
                     return true;
                 }
             });
-        
-        
+
+
         default: return state;
     }
 }

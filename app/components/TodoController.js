@@ -15,7 +15,7 @@ import {
 
 import TodoItem from './TodoItem';
 import NewTodoInput from './inputs/NewTodo';
-import { unauthUser } from '../actions';
+import { unauthUser, getTodos } from '../actions';
 
 var TodoController = React.createClass({
     getInitialState() {
@@ -26,7 +26,17 @@ var TodoController = React.createClass({
         }
     },
     onRefresh() {
-
+        this.setState({
+                refreshing: true
+            }, function () {
+                this.props.dispatch(getTodos).then(() => {
+                    this.setState({
+                        refreshing: false
+                    }, function () {
+                        this.setState(this.state);
+                    });
+                });
+            });
     },
     onLogout() {
         // this.props.dispatch(setTodos([]));

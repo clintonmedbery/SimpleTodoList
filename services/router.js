@@ -25,5 +25,9 @@ router.route('/users/:user_id/todos')
     .post(requireAuth, TodosController.create)
     .get(requireAuth, TodosController.index);
 
+router.route('/users/:user_id/todos/:todo_id')
+    .delete(requireAuth, TodosController.destroy);
+
+
 
 module.exports = router;
