@@ -15,13 +15,11 @@ var TodoItem = React.createClass ({
     },
     render() {
         return (
-            <TouchableOpacity onPress={this.deleteTodo}>
                 <View style={styles.todoContainer}> 
                     <Text style={styles.todoText}>
                         {this.props.text}
                     </Text>
                 </View>
-            </TouchableOpacity>
         );
     }
 });
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    marginBottom: -1,
+    marginTop: -1,
     borderColor: '#CCC'
   },
   todoText: {

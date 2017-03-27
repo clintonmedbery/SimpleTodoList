@@ -2,6 +2,7 @@ const passport = require('passport');
 
 const passportService = require('./passport');
 const AuthenticationController = require('../controllers/authenticationController');
+const TodosController = require('../controllers/todosController');
 
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session: false});
@@ -15,8 +16,14 @@ function protected(req, res, next) {
 router.route('/protected')
     .get(requireAuth, protected);
 
+// Auth Routes
 router.route('/signup').post(AuthenticationController.signup);
 router.route('/signin').post(requireLogin, AuthenticationController.signin);
+
+// Todo Routes
+router.route('/users/:user_id/todos')
+    .post(requireAuth, TodosController.create)
+    .get(requireAuth, TodosController.index);
 
 
 module.exports = router;

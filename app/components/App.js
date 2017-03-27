@@ -10,7 +10,8 @@ import {
  } from 'react-native';
 
 import Login from './Login';
-import TodoController from './TodoController';
+import Main from './Main';
+
 import AlertContainer from './alerts/AlertContainer';
 
 class App extends Component{
@@ -23,12 +24,13 @@ class App extends Component{
                 <Login/>
                 );
             } else {
-                return (<TodoController/>);
+                return (<Main/>);
             }
         };
         
         return (
             <View style={{flex: 1}}>
+                <StatusBar barStyle='light-content'/>
                 {renderMainView()}
                 <AlertContainer/>
             </View>
@@ -54,19 +56,6 @@ const styles = StyleSheet.create({
   title:{
       color: 'white',
       fontSize: 20
-  },
-  inputContainer: {
-      padding: 8,
-      paddingTop: 0,
-      backgroundColor: '#2ECC71'
-  },
-  input: {
-      height: 26,
-      padding: 4,
-      paddingLeft: 8,
-      borderRadius: 8,
-      backgroundColor: 'white'
-
   }
 });
 

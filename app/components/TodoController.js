@@ -1,67 +1,76 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import { 
+import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/Octicons';
+
+import {
     StyleSheet,
     Text,
     View,
     StatusBar,
     TextInput,
-    ScrollView
- } from 'react-native';
+    ScrollView,
+    RefreshControl,
+    TouchableOpacity
+} from 'react-native';
 
 import TodoItem from './TodoItem';
-import {addTodo} from '../actions';
+import NewTodoInput from './inputs/NewTodo';
+import { unauthUser } from '../actions';
 
-var TodoController = React.createClass ({
+var TodoController = React.createClass({
     getInitialState() {
-        return{
+        return {
+            refreshing: false,
             newTodoText: ""
 
         }
     },
-    addNewTodo(){
-        var {newTodoText} = this.state;
-        if (newTodoText && newTodoText != ""){
-            this.setState({
-                newTodoText: ""
-            });
-            this.props.dispatch(addTodo(newTodoText));
-            console.log(newTodoText);
-        }
+    onRefresh() {
+
+    },
+    onLogout() {
+        // this.props.dispatch(setTodos([]));
+        this.props.dispatch(unauthUser);
+    },
+    goToNewTodo() {
+        this.props.navigator.push({
+            component: NewTodoInput,
+            title: "New Todo",
+            navigationBarHidden: true
+        })
     },
     render() {
-
+        console.log("TODOS", this.props.todos);
         var renderTodos = () => {
-            // return this.props.todos.map((todo) => {
-                
-            //     return (
-            //         <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
-            //     )
-            // });
+            console.log("refreshing", this.state.refreshing);
+            return this.props.todos.map((todo) => {
+
+                return (
+                    <TodoItem text={todo.text} key={todo._id} id={todo._id} />
+                )
+            });
         }
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="light-content"/>
-                
-                    <View style={styles.topBar}>
-                        <Text style={styles.title}>                     
-                            To-Do List
+                <View style={styles.topBar}>
+                    <TouchableOpacity onPress={this.onLogout}>
+                        <Icon name="x" size={20} color="white" />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>
+                        To-Do List
                         </Text>
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <TextInput 
-                        onChange={(event) => {
-                            this.setState({
-                                newTodoText: event.nativeEvent.text
-                            });
-                        }}
-                        value={this.state.newTodoText}
-                        returnKeyType="done"
-                        placeholder="New To-Do"
-                        style={styles.input}
-                        onSubmitEditing={this.addNewTodo}/>
-                    </View>
-                <ScrollView automaticallyAdjustContnetInsets={false}>
+                    <TouchableOpacity onPress={this.goToNewTodo}>
+                        <Icon name="plus" size={20} color="white" />
+                    </TouchableOpacity>
+                </View>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh} />
+                    }
+                    contentContainerStyle={styles.scrollViewContainer}
+                    automaticallyAdjustContentInsets={false}>
                     {renderTodos()}
                 </ScrollView>
             </View>
@@ -70,37 +79,37 @@ var TodoController = React.createClass ({
 });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch'
-  },
-  topBar:{
-      padding: 16,
-      paddingTop: 28,
-      paddingBottom: 8,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#2ECC71'
-  },
-  title:{
-      color: 'white',
-      fontSize: 20
-  },
-  inputContainer: {
-      padding: 8,
-      paddingTop: 0,
-      backgroundColor: '#2ECC71'
-  },
-  input: {
-      height: 26,
-      padding: 4,
-      paddingLeft: 8,
-      borderRadius: 8,
-      backgroundColor: 'white'
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'stretch'
+    },
+    topBar: {
+        padding: 16,
+        paddingTop: 28,
+        paddingBottom: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#2ECC71'
+    },
+    title: {
+        color: 'white',
+        fontSize: 20
+    },
+    inputContainer: {
+        padding: 8,
+        paddingTop: 0,
+        backgroundColor: '#2ECC71'
+    },
+    input: {
+        height: 26,
+        padding: 4,
+        paddingLeft: 8,
+        borderRadius: 8,
+        backgroundColor: 'white'
 
-  }
+    }
 });
 
 var mapStateToProps = (state) => {
