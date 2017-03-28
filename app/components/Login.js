@@ -4,41 +4,12 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
     TouchableOpacity
 } from 'react-native';
 
 import { loginUser, signUpUser, addAlert } from '../actions';
 import Loading from './alerts/Loading';
-
-var EmailField = React.createClass({
-    render() {
-        const { input: { value, onChange }, ...otherProps } = this.props;
-        return (
-            <TextInput
-                keyboardType="email-address"
-                style={styles.textInput}
-                onChangeText={text => onChange(text)}
-                value={value}
-                {...otherProps}
-            />
-        );
-    }
-});
-
-var PasswordField = React.createClass({
-    render() {
-        const { input: { value, onChange }, ...otherProps } = this.props;
-        return (
-            <TextInput
-                style={styles.textInput}
-                onChangeText={text => onChange(text)}
-                value={value}
-                {...otherProps}
-            />
-        );
-    }
-});
+import EmailField from './inputs/EmailField';
 
 class Login extends Component {
     constructor(props) {
