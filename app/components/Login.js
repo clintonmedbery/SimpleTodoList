@@ -10,6 +10,7 @@ import {
 import { loginUser, signUpUser, addAlert } from '../actions';
 import Loading from './alerts/Loading';
 import EmailField from './inputs/EmailField';
+import PasswordField from './inputs/PasswordField';
 
 class Login extends Component {
     constructor(props) {
