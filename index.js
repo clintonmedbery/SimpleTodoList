@@ -6,7 +6,11 @@ const mongoose = require('mongoose');
 var app = express();
 
 var router = require('./services/router');
-mongoose.connect('mongodb://localhost:todoList/todoList');
+
+//Use ENV Variables
+mongoose.connect('mongo://mongo:27017');
+
+// mongoose.connect('mongodb://localhost:todoList/todoList');
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());

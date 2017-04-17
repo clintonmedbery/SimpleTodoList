@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+index.android.js
+index.ios.js
+.watchmanconfig
+.flowconfig
+ios
+app
+.vscode
+__tests__
+android
