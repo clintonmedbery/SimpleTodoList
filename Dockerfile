@@ -1,6 +1,11 @@
 FROM node:boron
 
-RUN mkdir /app
+MAINTAINER Clinton Medbery <clintomed@gmail.com>
+
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "vim"]
+
+RUN mkdir - p /app
 WORKDIR /app
 
 COPY package.json /app

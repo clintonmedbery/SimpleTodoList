@@ -1,0 +1,2 @@
+S_ENGINE_AUTH_TYPE=dockercfg
+ECS_ENGINE_AUTH_DATA={"https://index.docker.io/v1/": {"auth": "Y2xpbnRvbWVkOlVmb3VmbzEyMzQ1Kw==","email": "clintomed@gmail.com"}

@@ -9,3 +9,4 @@ app
 .vscode
 __tests__
 android
+todoListDocker.env

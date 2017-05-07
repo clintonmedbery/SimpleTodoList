@@ -4,11 +4,25 @@ services:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      - .:/app
+    env_file:
+      - todoListDocker.env
     links:
       - mongo
+
   mongo:
     image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=tWwp3Fm4hZUsaLw4
     volumes:
-      - /data/db
+      - mongo:/data/db
     ports:
       - "27017:27017"
+    env_file:
+      - todoListDocker.env
+
+volumes:
+  mongo:
+    
