@@ -7,13 +7,22 @@ var app = express();
 
 var router = require('./services/router');
 
+// console.log("ENV: ");
+// console.log(process.env);
+
 //Use ENV Variables
 console.log("Connecting to Mongo");
-mongoose.connect('mongodb://root:tWwp3Fm4hZUsaLw4@mongo:27017');
+
+mongoose.connect('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017', function(error){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log("Connected to Mongo");
+    }
+});
 //Local Mongo connection. Need to put these into ENV
 // mongoose.connect('mongodb://localhost:todoList/todoList');
 
-console.log("Connected to Mongo");
 
 
 app.use(morgan('combined'));

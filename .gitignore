@@ -53,6 +53,4 @@ fastlane/Preview.html
 fastlane/screenshots
 
 config.js
-
-todoListDocker.env
 *.env
