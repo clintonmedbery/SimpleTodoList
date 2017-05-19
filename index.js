@@ -7,23 +7,36 @@ var app = express();
 
 var router = require('./services/router');
 
-// console.log("ENV: ");
-// console.log(process.env);
+console.log("Here we go!!");
 
-//Use ENV Variables
-console.log("Connecting to Mongo");
+if(process.env.MONGO_PRIVATE_IP){
+    console.log("Connecting to Mongo with Private IP");
 
-mongoose.connect('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017', function(error){
-    if(error) {
-        console.log(error);
-    } else {
-        console.log("Connected to Mongo");
-    }
-});
-//Local Mongo connection. Need to put these into ENV
-// mongoose.connect('mongodb://localhost:todoList/todoList');
+    var address = 'mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@' + process.env.MONGO_PRIVATE_IP +':27017/' + process.env.MONGO_DB_NAME;
+    console.log(address);
+    mongoose.connect(address, function(error){
+        if(error) {
+            console.log(error);
+        } else {
+            console.log("Connected to Mongo");
+        }
+    });
+} else if(process.env.MONGO_INITDB_ROOT_USERNAME){
+    console.log("Connecting to Mongo Docker Compose");
+    var address = 'mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017/' + process.env.MONGO_DB_NAME;
+    console.log(address);
 
-
+    mongoose.connect(address, function(error){
+        if(error) {
+            console.log(error);
+        } else {
+            console.log("Connected to Mongo");
+        }
+    });
+} else {
+    console.log("Connecting to Mongo Local");
+    mongoose.connect('mongodb://localhost:todoList/todoList');
+}
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());

@@ -52,5 +52,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 
+config
 config.js
 *.env
